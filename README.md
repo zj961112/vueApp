@@ -1,6 +1,6 @@
 # vue_cms
 
-> A Vue.js project，这是一个练习的项目，牛不牛逼有用心去感受
+> A Vue.js project，这是一个练习的项目，牛不牛逼用心去感受
 
 ## Build Setup
 
