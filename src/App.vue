@@ -3,7 +3,10 @@
     <!--头部-->
     <mt-header fixed title="固定在顶部"></mt-header>
     <!--内容-->
-    <router-view></router-view>
+    <transition>
+      <router-view></router-view>
+    </transition>
+
     <!--底部tabbar-->
     <nav class="mui-bar mui-bar-tab">
       <router-link class="mui-tab-item" to="/home">
@@ -35,7 +38,25 @@
 </script>
 
 <style>
+  body{
+    background-color: #ffffff;
+  }
   .app_container{
     padding-top: 40px;
+    overflow-x: hidden;
+  }
+
+  .v-enter{
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  .v-leave-to{
+    opacity: 0;
+    transform: translateX(-100%);
+    position: absolute;
+  }
+  .v-enter-active,
+  .v-leave-active{
+    transition: all 0.5s ease;
   }
 </style>

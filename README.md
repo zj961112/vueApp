@@ -24,3 +24,5 @@
 2、使用 vue-resource的this.$http.get获取数据，这里涉及到跨域问题，改一下config 的 index文件
 3、获取到的数据，要保存到data身上
 4、使用v-for循环渲染每个index项
+
+##改造 九宫格 区域的样式
