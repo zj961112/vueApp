@@ -2,9 +2,9 @@
     <div class="cmt_container">
         <h3 class="title">发表评论</h3>
         <hr>
-        <textarea placeholder="请输入要吐槽的内容（最多吐槽120字）" maxlength="120"></textarea>
+        <textarea placeholder="请输入要吐槽的内容（最多吐槽120字）" maxlength="120" v-model="msg"></textarea>
 
-        <mt-button type="primary" size="large">发表评论</mt-button>
+        <mt-button type="primary" size="large" @click.native="postComment">发表评论</mt-button>
 
         <div class="cmt_list">
             <div class="cmt_item" v-for="(item,index) in comments" :key="index">
@@ -30,7 +30,8 @@
         data(){
             return{
                 pageIndex:1,
-                comments:[]
+                comments:[],
+                msg:''    //评论输入的内容
             }
         },
         created(){
@@ -55,6 +56,33 @@
             addMore(){
                 this.pageIndex++;
                 this.getComments();
+            },
+            postComment(){
+                //校验是否为空
+                if(this.msg.trim().length === 0){
+                    return toast('评论内容不能为空')
+                }
+                //发表评论
+                //参数1:请求的url地址
+                //参数2：提交给服务器的数据对象 {content:this.msg}
+                //参数3：定义提交时候，表单汇总数据的格式{emulateJSON:true}  --在全局中设置好
+                this.$http.post('/postComment/' + this.id, {content:this.msg.trim()}).then(res => {
+//                    console.log(res)
+                    if(res.body.status === 0){
+                        //1、拼接出一个评论对象，手动添加在评论的前面
+                        var cmt = {
+                            userName:'匿名用户',
+                            addTime:Date.now(),
+                            content:this.msg.trim()
+                        };
+                        this.comments.unshift(cmt)
+                        this.msg=''
+                    }else{
+                        toast('发表失败')
+                    }
+                },err => {
+                    toast('请求失败')
+                })
             }
         }
     }
