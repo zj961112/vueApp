@@ -13,13 +13,13 @@
         </div>
         <!--图片-->
         <ul class="photoBox">
-            <li v-for="item in imgList" :key="item.id">
+            <router-link v-for="item in imgList" :key="item.id" :to="'/home/getImageInfo/' + item.id" tag="li">
                 <img v-lazy="item.imgUrl">
                 <div class="photoCotent">
                     <h4>{{item.title}}</h4>
                     <p>{{item.topic}}</p>
                 </div>
-            </li>
+            </router-link>
         </ul>
     </div>
 </template>
@@ -58,7 +58,7 @@
                         };
                         res.body.messages.unshift(allComment);
                         this.ImgCategory = res.body.messages;
-                        console.log('这里执行了'+this.ImgCategory)
+                        //console.log('这里执行了'+this.ImgCategory)
                     }else{
                         toast('获取数据失败')
                     }
@@ -68,7 +68,7 @@
             },
             getImgList(cateId){
                 this.$http.get('/getImgList/' + cateId).then(res => {
-                    //console.log(res);
+                    console.log(res);
                     if(res.body.status===0){
                         this.imgList = res.body.messages
                     }else{

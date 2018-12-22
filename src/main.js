@@ -33,9 +33,16 @@ import router from './router'
 // Vue.component(SwipeItem.name, SwipeItem);
 // Vue.component(Button.name, Button);
 // Vue.use(Lazyload);
+//图片懒加载需要全部导入mint-ui所以这里不能按需导入了
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 Vue.use(MintUI);
+
+//安装 图片预览插件
+import VuePreview from 'vue-preview'
+Vue.use(VuePreview);
+import './lib/css/global.css'
+
 //导入mui
 import './lib/css/mui.min.css'
 import './lib/css/icons-extra.css'

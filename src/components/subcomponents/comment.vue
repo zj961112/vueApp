@@ -93,6 +93,7 @@
         text-align: left;
         color: #000;
         margin: 10px 0;
+        font-size: 16px;
     }
     .cmt_container textarea{
         height: 100px;
