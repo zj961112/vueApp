@@ -31,7 +31,7 @@
             }
         },
         created(){
-            this.getPhotoInfo(),
+            this.getPhotoInfo()
             this.getThumImages()
         },
         methods:{
@@ -64,23 +64,24 @@
     }
 </script>
 
-<style scoped>
+<style lang="less">
 .photoInfo_container{
     padding: 3px;
+    h3{
+        color: #26A2FF;
+        font-size: 15px;
+        text-align: center;
+        margin: 15px 0;
+    }
+    .subtitle{
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+    }
+    .content{
+        font-size: 13px;
+        line-height: 30px;
+    }
 }
-.photoInfo_container h3{
-    color: #26A2FF;
-    font-size: 15px;
-    text-align: center;
-    margin: 15px 0;
-}
-.photoInfo_container .subtitle{
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-}
-.photoInfo_container .content{
-    font-size: 13px;
-    line-height: 30px;
-}
+
 </style>

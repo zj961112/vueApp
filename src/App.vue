@@ -3,7 +3,7 @@
     <!--头部-->
     <mt-header fixed title="固定在顶部">
       <router-link to="/" slot="left">
-        <mt-button icon="back">返回</mt-button>
+        <mt-button icon="back" @click="$router.go(-1)">返回</mt-button>
       </router-link>
     </mt-header>
     <!--内容-->
