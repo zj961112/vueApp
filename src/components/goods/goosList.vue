@@ -1,6 +1,6 @@
 <template>
     <div class="goodsContainer">
-        <div class="goodsBox" v-for="(item,index) in goodsList" :key="item.id">
+        <div class="goodsBox" v-for="(item,index) in goodsList" :key="item.id" @click="goGoodsInfo(item.id)">
             <img :src="item.imgUrl">
             <h1 class="title">{{item.title}}</h1>
             <div class="info">
@@ -46,6 +46,10 @@
                 this.pageIndex++;
                 //console.log(this.pageIndex)
                 this.getGoodsList()
+            },
+            //以下方法是编程时导航，router-link to 是声明式导航，两者效果一样
+            goGoodsInfo(id){
+                this.$router.push('/home/getGoodsInfo/' + id)
             }
         }
     }

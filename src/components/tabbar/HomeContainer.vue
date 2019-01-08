@@ -1,11 +1,7 @@
 <template>
     <div>
         <!--轮播图-->
-        <mt-swipe :auto="4000">
-            <mt-swipe-item v-for="(index,value) in imgs" :key="index">
-                <img :src="index">
-            </mt-swipe-item>
-        </mt-swipe>
+        <swiper :imgs="imgs" :isfull="true"></swiper>
         <!--导航-->
         <ul class="mui-table-view mui-grid-view mui-grid-9">
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
@@ -44,6 +40,8 @@
 
 <script>
     import {toast} from 'mint-ui'
+    //导入轮播图组件
+    import swiper from "../subcomponents/swiper.vue"
     export default{
         data(){
             return {
@@ -66,18 +64,15 @@
                     toast('请求失败')
                 })
             }
+        },
+        //映射成标签
+        components:{
+            swiper
         }
     }
 </script>
 
 <style>
-    .mint-swipe {
-        height: 200px;
-    }
-    .mint-swipe img {
-        height: 100%;
-        width: 100%;
-    }
     .mui-col-sm-3{
         width: 33%;
     }

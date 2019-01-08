@@ -88,7 +88,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .cmt_container .title{
         text-align: left;
         color: #000;
