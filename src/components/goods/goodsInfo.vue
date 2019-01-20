@@ -4,7 +4,7 @@
         @before-enter="beforeEnter"
         @enter="enter"
         @after-enter="afterEnter">
-            <div class="ball" v-show="ballFlag"></div>
+            <div class="ball" v-show="ballFlag" ref="ball"></div>
         </transition>
         <!--商品轮播图区域-->
         <div class="mui-card">
@@ -20,10 +20,15 @@
                     <p class="price">
                         市场价：<del>￥{{goodsInfo.marketPrice}}</del>&nbsp;&nbsp;销售价：<span class="now_price">￥{{goodsInfo.sellPrice}}</span>
                     </p>
-                    <p>购买数量：<numBox></numBox></p>
+                    <p>购买数量：<numBox @getCount="getSelectedCount" :max="goodsInfo.stockQuantity"></numBox></p>
                     <p>
                         <mt-button type="primary" size="small">立即购买</mt-button>
                         <mt-button type="danger" size="small" @click="addToShopCar">加入购物车</mt-button>
+                        <!--分析：如何实现加入购物车的时候，拿到选择的数量-->
+                        <!--1、经过分析发现，按钮属于 goodsInfo 页面，数字属于 numBox 组件-->
+                        <!--2、由于涉及到父子组件的嵌套，无法直接在goodsInfo 页面中直接获取到选中的商品数量值-->
+                        <!--3、如何解决？涉及到子组件向父组件传值（事件调用机制）-->
+                        <!--4、事件调用的本质：父向子传递方法，子调用这个方法，同时把数据当做参数传递给这个方法-->
                     </p>
                 </div>
             </div>
@@ -67,7 +72,8 @@
                 id:this.$route.params.id,
                 imgs:'',         //轮播图的数据
                 goodsInfo:'',     //获取到商品信息
-                ballFlag: false   //控制小球隐藏和显示的标识符
+                ballFlag: false,   //控制小球隐藏和显示的标识符
+                selectedCount:1    //保存用户选中商品的数量，默认为1
             }
         },
         created(){
@@ -119,7 +125,14 @@
             },
             enter(el, done){
                 el.offsetWidth;
-                el.style.transform = "translate(93px,261px)";
+                //获取小球在页面中的位置
+                const ballPosition = this.$refs.ball.getBoundingClientRect();
+                //console.log(ballPosition);
+                //获取徽标在页面中的位置
+                const bdgePosition = document.getElementById('badge').getBoundingClientRect();
+                const xDist = bdgePosition.left - ballPosition.left;
+                const yDist = bdgePosition.top - ballPosition.top;
+                el.style.transform = `translate(${xDist}px,${yDist}px)`;
                 el.style.transition = "all 1s cubic-bezier(.07,.83,.91,.18)";
                 setTimeout(function () {
                     done();                          //不定时的话，会动画之前就调用afterEnter钩子函数，看不到动画过渡效果，所以定一个与动画相等时间的定时器，再调用afterEnter
@@ -127,7 +140,12 @@
             },
             afterEnter(el){
                 this.ballFlag = false;
-                console.log(this.ballFlag)
+                //console.log(this.ballFlag)
+            },
+            getSelectedCount(count){
+                //当子组件把选中的数量传递给父组件的时候，把选中的值保存到data上
+                this.selectedCount = count;
+                console.log('父组件拿到的数量值为：' + this.selectedCount)
             }
         },
         components:{
